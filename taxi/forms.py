@@ -13,6 +13,7 @@ def validate_license_number(license_number):
         raise ValidationError("Last 5 characters must be digits")
     return license_number
 
+
 class DriverCreationForm(UserCreationForm):
     class Meta(UserCreationForm.Meta):
         model = Driver
@@ -26,6 +27,7 @@ class DriverCreationForm(UserCreationForm):
     def clean_license_number(self):
         return validate_license_number(self.cleaned_data["license_number"])
 
+
 class DriverLicenseUpdateForm(forms.ModelForm):
     class Meta:
         model = Driver
@@ -33,6 +35,7 @@ class DriverLicenseUpdateForm(forms.ModelForm):
 
     def clean_license_number(self):
         return validate_license_number(self.cleaned_data["license_number"])
+
 
 class CarForm(forms.ModelForm):
 

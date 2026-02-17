@@ -64,12 +64,10 @@ class CarDetailView(LoginRequiredMixin, generic.DetailView):
     model = Car
 
 
-
 class CarCreateView(LoginRequiredMixin, generic.CreateView):
     model = Car
     form_class = CarForm
     success_url = reverse_lazy("taxi:car-list")
-
 
 
 class CarUpdateView(LoginRequiredMixin, generic.UpdateView):
@@ -93,8 +91,6 @@ class DriverDetailView(LoginRequiredMixin, generic.DetailView):
     queryset = Driver.objects.all().prefetch_related("cars__manufacturer")
 
 
-
-
 class DriverCreateView(LoginRequiredMixin, generic.CreateView):
     model = Driver
     form_class = DriverCreationForm
@@ -111,7 +107,6 @@ class DriverDeleteView(LoginRequiredMixin, generic.DeleteView):
     success_url = reverse_lazy("taxi:driver-list")
 
 
-
 @login_required
 def toggle_assign_to_car(request, pk):
     driver = Driver.objects.get(id=request.user.id)
@@ -120,4 +115,8 @@ def toggle_assign_to_car(request, pk):
         car.drivers.remove(driver)
     else:
         car.drivers.add(driver)
-    return HttpResponseRedirect(reverse_lazy("taxi:car-detail", kwargs={"pk": pk}))
+    return HttpResponseRedirect(
+        reverse_lazy(
+            "taxi:car-detail",
+            kwargs={
+                "pk": pk}))
